@@ -1,0 +1,46 @@
+#include <WiFi.h>
+#include "esp_wifi.h"
+
+const char* ssid     = "HUAWEI-2.4G";
+const char* password = "yVhBG2Q4";
+
+void setup() {
+  Serial.begin(115200);
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  Serial.printf("Connecting to %s", ssid);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected!");
+  Serial.print("IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  // --- Get auth mode (WPA2 / WPA3) ---
+  wifi_ap_record_t apinfo;
+  if (esp_wifi_sta_get_ap_info(&apinfo) == ESP_OK) {
+    Serial.printf("SSID: %s\n", apinfo.ssid);
+    Serial.printf("Channel: %d\n", apinfo.primary);
+
+    Serial.print("Authmode: ");
+    switch (apinfo.authmode) {
+      case WIFI_AUTH_OPEN: Serial.println("OPEN"); break;
+      case WIFI_AUTH_WEP: Serial.println("WEP (unsupported)"); break;
+      case WIFI_AUTH_WPA_PSK: Serial.println("WPA-PSK"); break;
+      case WIFI_AUTH_WPA2_PSK: Serial.println("WPA2-PSK"); break;
+      case WIFI_AUTH_WPA_WPA2_PSK: Serial.println("WPA/WPA2-PSK"); break;
+      case WIFI_AUTH_WPA2_ENTERPRISE: Serial.println("WPA2-Enterprise"); break;
+      case WIFI_AUTH_WPA3_PSK: Serial.println("WPA3-SAE (Personal)"); break;
+      case WIFI_AUTH_WPA2_WPA3_PSK: Serial.println("WPA2/WPA3 mixed"); break;
+      default: Serial.println("UNKNOWN"); break;
+    }
+  } else {
+    Serial.println("Failed to get AP info");
+  }
+}
+
+void loop() {
+  delay(5000);
+}
