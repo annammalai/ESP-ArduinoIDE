@@ -1,8 +1,8 @@
 #include <WiFi.h>
 #include "esp_wifi.h"
 
-const char* ssid     = "HUAWEI-2.4G";
-const char* password = "yVhBG2Q4";
+const char* ssid     = "";
+const char* password = "";
 
 void setup() {
   Serial.begin(115200);
