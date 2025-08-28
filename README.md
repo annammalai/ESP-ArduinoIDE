@@ -3,7 +3,7 @@ code (extended version)
 #include "esp_wifi.h"   // extra include → gives low-level ESP-IDF functions
 
 
-You imported esp_wifi.h → this is ESP-IDF’s Wi-Fi API, not part of the usual Arduino library.
+imported esp_wifi.h → this is ESP-IDF’s Wi-Fi API, not part of the usual Arduino library.
 
 This allows you to query detailed info about the access point (like security type, channel, BSSID, etc.).
 
@@ -19,13 +19,13 @@ while (WiFi.status() != WL_CONNECTED) {
 }
 
 
-👉 Same as the simple sketch: wait until connected.
+ Same as the simple sketch: wait until connected.
 
 wifi_ap_record_t apinfo;
 if (esp_wifi_sta_get_ap_info(&apinfo) == ESP_OK) {
 
 
-👉 This is the new part.
+This is the new part.
 
 wifi_ap_record_t is a struct that stores details about the Wi-Fi you’re connected to.
 
@@ -45,13 +45,13 @@ switch (apinfo.authmode) {
 }
 
 
-👉 This is the special part: it prints what security type you’re actually using.
+This is the special part: it prints what security type you’re actually using.
 
 The basic Arduino WiFi library doesn’t tell you if you are on WPA2 or WPA3.
 
 By calling esp_wifi_sta_get_ap_info(), you can see it directly from the ESP-IDF layer.
 
-3. So what’s the difference?
+ So what’s the difference?
 
 Simple sketch → just connects and shows IP.
 
@@ -63,4 +63,4 @@ Wi-Fi channel
 
 Auth mode (security type) = WPA2, WPA3, mixed, etc.
 
-👉 Your code is more “professional” or diagnostic — useful for verifying real security connection (important since ESP32 sometimes silently falls back to WPA2).
+👉 code is more “professional” or diagnostic — useful for verifying real security connection (important since ESP32 sometimes silently falls back to WPA2).
